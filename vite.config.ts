@@ -6,9 +6,9 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My PWA App",
-        short_name: "PWA",
-        description: "A Progressive Web App built with Vite and TypeScript",
+        name: "Todo List Pwa",
+        short_name: "Todo List",
+        description: "A Progressive Todo List Web App",
         theme_color: "#000000",
         background_color: "#ffffff",
         display: "standalone",
