@@ -1,5 +1,7 @@
 {
-    "public": "dist",
+    "build": {
+      "outputDirectory": "dist"
+    },
     "rewrites": [
       {
         "source": "/service-worker.js",
