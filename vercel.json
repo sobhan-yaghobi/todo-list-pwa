@@ -1,12 +1,8 @@
 {
-    "build": {
-      "outputDirectory": "dist"
-    },
-    "rewrites": [
-      {
-        "source": "/service-worker.js",
-        "destination": "/service-worker.js"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/service-worker.js",
+      "destination": "/service-worker.js"
+    }
+  ]
+}
