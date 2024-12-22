@@ -88,3 +88,44 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+li{
+  list-style-type: none;
+}
+
+#todo-list {
+  display: grid;
+  padding: 0;
+  grid-template-columns: repeat(3,1fr);
+  gap: 3rem;
+
+  & .todo-item {
+    position: relative;
+    width: auto;
+    background-color: #343434;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    & .todo-item__description {
+
+    }
+
+    & .todo-item__button {
+
+    }
+
+    & .todo-item__button-delete {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+}
+
+.button-success {
+
+}
+
+.button-danger {
+  background-color: #db0202d0;
+}

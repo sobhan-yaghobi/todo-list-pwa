@@ -4,8 +4,10 @@ import { Todo } from "./todo.type"
 
 export const supabaseUrl = "https://yooiaidlyydofvfcxfuj.supabase.co/rest"
 export const todoFetchUrl = `${supabaseUrl}/v1/todos`
-export const authorizationToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvb2lhaWRseXlkb2Z2ZmN4ZnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NzU3MzgsImV4cCI6MjA0OTI1MTczOH0.sM2jygdiZPFgnFwsNC85Newo1KOJd_IONlzM9mu0HcY"
-export const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvb2lhaWRseXlkb2Z2ZmN4ZnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NzU3MzgsImV4cCI6MjA0OTI1MTczOH0.sM2jygdiZPFgnFwsNC85Newo1KOJd_IONlzM9mu0HcY"
+export const authorizationToken =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvb2lhaWRseXlkb2Z2ZmN4ZnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NzU3MzgsImV4cCI6MjA0OTI1MTczOH0.sM2jygdiZPFgnFwsNC85Newo1KOJd_IONlzM9mu0HcY"
+export const apiKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvb2lhaWRseXlkb2Z2ZmN4ZnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NzU3MzgsImV4cCI6MjA0OTI1MTczOH0.sM2jygdiZPFgnFwsNC85Newo1KOJd_IONlzM9mu0HcY"
 
 // Fetch todos from Supabase API
 const getTodos = async () => {
@@ -31,16 +33,17 @@ const getTodos = async () => {
 }
 
 // Create DOM elements for todos
-const createTodoElements = (todos : Todo[]) =>
+const createTodoElements = (todos: Todo[]) =>
   todos?.map(
     (todo) => `
     <li class="todo-item" data-id="${todo.id}">
-      <h1 class="todo-item__title">${todo.title}</h1>
+      <button class="todo-item__button todo-item__button-delete button-danger" data-action="delete">delete</button>
+      <h2 class="todo-item__title">${todo.title}</h2>
       <p class="todo-item__description">${todo.description}</p>
       ${
         todo.isCompleted
-          ? `<button class="todo-item__button button-danger">Uncomplete</button>`
-          : `<button class="todo-item__button button-success">Complete</button>`
+          ? `<button class="todo-item__button" data-action="uncomplete">Uncomplete</button>`
+          : `<button class="todo-item__button button-success" data-action="complete">Complete</button>`
       }
     </li>`
   )
@@ -48,13 +51,27 @@ const createTodoElements = (todos : Todo[]) =>
 // Render todo items
 const renderTodoItems = async () => {
   const todos = await getTodos()
-  console.log("todostodostodostodos" , todos);
-  
   const todosItemsElements = createTodoElements(todos)
 
-  const todoListElm : HTMLUListElement = document.querySelector("ul#todo-list")!
+  const todoListElm: HTMLUListElement = document.querySelector("ul#todo-list")!
   todoListElm.innerHTML = ""
   todoListElm.insertAdjacentHTML("beforeend", todosItemsElements?.join(""))
+
+  todoListElm.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement
+    if (target.tagName === "BUTTON") {
+      const action = target.dataset.action
+      const todoId = target.closest("li")?.dataset.id
+
+      if (action === "complete") {
+        console.log("action mode is complete", todoId)
+      } else if (action === "uncomplete") {
+        console.log("action mode is uncomplete", todoId)
+      } else if (action === "delete") {
+        console.log("action mode is deleted", todoId)
+      }
+    }
+  })
 }
 
 // Sync data to backend when online
