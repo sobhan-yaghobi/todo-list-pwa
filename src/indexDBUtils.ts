@@ -13,7 +13,7 @@ const initDB = async () => {
 }
 
 // Add or update a todo in IndexedDB
-const saveTodosToDB = async (todos : Todo[]) => {
+const saveTodosToDB = async (todos: Todo[]) => {
   const db = await initDB()
   const tx = db.transaction("todos", "readwrite")
   const store = tx.objectStore("todos")

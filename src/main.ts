@@ -1,6 +1,6 @@
 import { clearTodosDB, getTodosFromDB, saveTodosToDB } from "./indexDBUtils"
 import "./style.css"
-import { Todo } from "./todo.type"
+import { Todo, TodoGenerate } from "./todo.type"
 
 export const supabaseUrl = "https://yooiaidlyydofvfcxfuj.supabase.co/rest"
 export const todoFetchUrl = `${supabaseUrl}/v1/todos`
@@ -100,6 +100,57 @@ window.addEventListener("online", () => {
   console.log("Online: Syncing with backend...")
   syncTodosToBackend()
 })
+
+// Event listener for todo submit form
+const todoSubmitFormElem: HTMLFormElement = document.querySelector(
+  "form#todo-submit-form"
+)!
+
+todoSubmitFormElem.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  const formData = new FormData(todoSubmitFormElem)
+  const descriptionFormData = formData.get("description")
+  const titleFormData = formData.get("title")
+
+  const newTodo: TodoGenerate = {
+    title: typeof titleFormData === "string" ? titleFormData : "",
+    description:
+      typeof descriptionFormData === "string" ? descriptionFormData : "",
+    isCompleted: false,
+    created_at: new Date(),
+    updated_at: null,
+  }
+
+  await createTodo(newTodo)
+  todoSubmitFormElem.reset()
+})
+
+const createTodo = async (newTodo: TodoGenerate) => {
+  try {
+    const res = await fetch(todoFetchUrl, {
+      method: "POST",
+      headers: {
+        apikey: apiKey,
+        Authorization: authorizationToken,
+        "Content-Type": "application/json",
+        Perfer: "return=minimal",
+      },
+      body: JSON.stringify(newTodo),
+    })
+
+    const data = await res.json()
+    console.log("data", data)
+    console.log("res", res)
+  } catch (error) {
+    console.error(
+      "Failed to fetch from backend. Fetching from IndexedDB:",
+      error
+    )
+    createTodoFromDB(newTodo)
+  }
+}
+
+const createTodoFromDB = (newTodo: TodoGenerate) => {}
 
 // Load and render todos on page load
 window.addEventListener("load", () => {

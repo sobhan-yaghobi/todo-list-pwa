@@ -8,8 +8,18 @@
   </head>
   <body>
     <h1>Todo List</h1>
-    <ul id="todo-list">
-    </ul>
+    <form id="todo-submit-form">
+      <input type="text" required name="title" placeholder="title" />
+      <input
+        type="text"
+        required
+        name="description"
+        placeholder="description"
+      />
+      <button type="submit">save todo</button>
+    </form>
+    <hr style="width: 100%" />
+    <ul id="todo-list"></ul>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
