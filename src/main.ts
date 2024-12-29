@@ -1,6 +1,6 @@
-import { clearTodosDB, getTodosFromDB, saveTodosToDB } from "./indexDBUtils"
+import { clearTodosDB, getTodosFromDB, saveTodosToDB } from "./db/todo/todo"
 import "./style.css"
-import { Todo, TodoGenerate } from "./todo.type"
+import { Todo, TodosSyncQueue } from "./types/todo"
 
 export const supabaseUrl = "https://yooiaidlyydofvfcxfuj.supabase.co/rest"
 export const todoFetchUrl = `${supabaseUrl}/v1/todos`
@@ -112,7 +112,7 @@ todoSubmitFormElem.addEventListener("submit", async (e) => {
   const descriptionFormData = formData.get("description")
   const titleFormData = formData.get("title")
 
-  const newTodo: TodoGenerate = {
+  const newTodo: TodosSyncQueue = {
     title: typeof titleFormData === "string" ? titleFormData : "",
     description:
       typeof descriptionFormData === "string" ? descriptionFormData : "",
@@ -125,7 +125,7 @@ todoSubmitFormElem.addEventListener("submit", async (e) => {
   todoSubmitFormElem.reset()
 })
 
-const createTodo = async (newTodo: TodoGenerate) => {
+const createTodo = async (newTodo: TodosSyncQueue) => {
   try {
     const res = await fetch(todoFetchUrl, {
       method: "POST",
@@ -146,11 +146,10 @@ const createTodo = async (newTodo: TodoGenerate) => {
       "Failed to fetch from backend. Fetching from IndexedDB:",
       error
     )
-    createTodoFromDB(newTodo)
+  } finally {
+    renderTodoItems()
   }
 }
-
-const createTodoFromDB = (newTodo: TodoGenerate) => {}
 
 // Load and render todos on page load
 window.addEventListener("load", () => {

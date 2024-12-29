@@ -7,4 +7,5 @@ export type Todo = {
   isCompleted: boolean | null
 }
 
-export type TodoGenerate = Omit<Todo, "id">
+// export type TodoGenerate = Omit<Todo, "id">
+export type TodosSyncQueue = Omit<Todo, "id"> & Partial<Pick<Todo, "id">>
