@@ -1,20 +1,19 @@
 import { clearTodosDB, getTodosFromDB, saveTodosToDB } from "../db/todo/todo"
 import { renderTodoItems } from "../dom/todo/render"
-import { TodosSyncQueue } from "../types/todo"
+import { HttpClient } from "../lib/fetch"
+import { Todo, TodosSyncQueue } from "../types/todo"
 
-export const todoFetchUrl = `${
-  import.meta.env.VITE_PUBLIC_SUPABASE_URL
-}/v1/todos`
+const todoFetch = new HttpClient({
+  baseURl: `${import.meta.env.VITE_PUBLIC_SUPABASE_URL}/v1/todos`,
+  headers: {
+    apikey: import.meta.env.VITE_PUBLIC_API_KEY,
+    Authorization: import.meta.env.VITE_PUBLIC_AUTHORIZATION_TOKEN,
+  },
+})
 
 export const getTodos = async () => {
   try {
-    const res = await fetch(`${todoFetchUrl}?select=*`, {
-      headers: {
-        apikey: import.meta.env.VITE_PUBLIC_API_KEY,
-        Authorization: import.meta.env.VITE_PUBLIC_AUTHORIZATION_TOKEN,
-      },
-    })
-    const todos = await res.json()
+    const todos = await todoFetch.request<Todo[]>("?select=*")
 
     // Save fetched todos to IndexedDB
     await saveTodosToDB(todos)
@@ -32,11 +31,9 @@ export const syncTodosToBackend = async () => {
   const todos = await getTodosFromDB()
 
   for (const todo of todos) {
-    await fetch(`${todoFetchUrl}`, {
+    await todoFetch.request(undefined, {
       method: "POST",
       headers: {
-        apikey: import.meta.env.VITE_PUBLIC_API_KEY,
-        Authorization: import.meta.env.VITE_PUBLIC_AUTHORIZATION_TOKEN,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(todo),
@@ -50,20 +47,15 @@ export const syncTodosToBackend = async () => {
 
 export const createTodo = async (newTodo: TodosSyncQueue) => {
   try {
-    const res = await fetch(todoFetchUrl, {
+    const data = await todoFetch.request(undefined, {
       method: "POST",
       headers: {
-        apikey: import.meta.env.VITE_PUBLIC_API_KEY,
-        Authorization: import.meta.env.VITE_PUBLIC_AUTHORIZATION_TOKEN,
         "Content-Type": "application/json",
-        Perfer: "return=minimal",
       },
       body: JSON.stringify(newTodo),
     })
 
-    const data = await res.json()
     console.log("data", data)
-    console.log("res", res)
   } catch (error) {
     console.error(
       "Failed to fetch from backend. Fetching from IndexedDB:",

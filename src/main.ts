@@ -2,7 +2,6 @@ import { syncTodosToBackend } from "./api/todo"
 import { renderTodoItems } from "./dom/todo/render"
 import "./style.css"
 
-
 window.addEventListener("online", () => {
   console.log("Online: Syncing with backend...")
   syncTodosToBackend()
