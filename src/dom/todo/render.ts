@@ -1,5 +1,6 @@
 import { getTodos } from "../../api/todo"
 import { Todo } from "../../types/todo"
+import { todoActionsHandler } from "./eventHandler"
 
 export const createTodoElements = (todos: Todo[]) =>
   todos?.map(
@@ -24,19 +25,5 @@ export const renderTodoItems = async () => {
   todoListElm.innerHTML = ""
   todoListElm.insertAdjacentHTML("beforeend", todosItemsElements?.join(""))
 
-  todoListElm.addEventListener("click", (event) => {
-    const target = event.target as HTMLElement
-    if (target.tagName === "BUTTON") {
-      const action = target.dataset.action
-      const todoId = target.closest("li")?.dataset.id
-
-      if (action === "complete") {
-        console.log("action mode is complete", todoId)
-      } else if (action === "uncomplete") {
-        console.log("action mode is uncomplete", todoId)
-      } else if (action === "delete") {
-        console.log("action mode is deleted", todoId)
-      }
-    }
-  })
+  todoActionsHandler(todoListElm)
 }
