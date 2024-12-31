@@ -1,5 +1,6 @@
-import { createTodo } from "../../api/todo"
+import { createTodo, syncTodosToBackend } from "../../api/todo"
 import { TodosSyncQueue } from "../../types/todo"
+import { renderTodoItems } from "./render"
 
 const todoSubmitFormElem: HTMLFormElement = document.querySelector(
   "form#todo-submit-form"
@@ -22,4 +23,13 @@ todoSubmitFormElem.addEventListener("submit", async (e) => {
 
   await createTodo(newTodo)
   todoSubmitFormElem.reset()
+})
+
+window.addEventListener("online", () => {
+  console.log("Online: Syncing with backend...")
+  syncTodosToBackend()
+})
+
+window.addEventListener("load", () => {
+  renderTodoItems()
 })
