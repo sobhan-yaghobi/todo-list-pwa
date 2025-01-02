@@ -1,5 +1,5 @@
 import { createTodo, syncTodosToBackend } from "../../api/todo"
-import { TodosSyncQueue } from "../../types/todo"
+import { Todo } from "../../utils/todo"
 import { renderTodoItems } from "./render"
 
 // Elements Todos Events
@@ -34,19 +34,11 @@ const todoSubmitFormElem: HTMLFormElement = document.querySelector(
 todoSubmitFormElem.addEventListener("submit", async (e) => {
   e.preventDefault()
   const formData = new FormData(todoSubmitFormElem)
-  const descriptionFormData = formData.get("description")
-  const titleFormData = formData.get("title")
 
-  const newTodo: TodosSyncQueue = {
-    title: typeof titleFormData === "string" ? titleFormData : "",
-    description:
-      typeof descriptionFormData === "string" ? descriptionFormData : "",
-    isCompleted: false,
-    created_at: new Date(),
-    updated_at: null,
-  }
+  const newTodo = new Todo().generateUsingFormData(formData)
 
   await createTodo(newTodo)
+
   todoSubmitFormElem.reset()
 })
 
