@@ -17,6 +17,7 @@ export const saveTodosSyncQueue = async (todosActions: TodosSyncQueue[]) => {
   const tx = db.transaction(todosSyncQueueStoreName, "readwrite")
   const store = tx.objectStore(todosSyncQueueStoreName)
   todosActions.forEach((TodosSyncQueue) => store.put(TodosSyncQueue))
+  await tx.done
 }
 
 export const getTodosSyncQueue = async () => {

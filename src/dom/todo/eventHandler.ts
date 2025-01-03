@@ -36,7 +36,7 @@ todoSubmitFormElem.addEventListener("submit", async (e) => {
   const formData = new FormData(todoSubmitFormElem)
 
   const newTodo = new Todo().generateUsingFormData(formData)
-
+  console.log("first", JSON.stringify(newTodo))
   await createTodo(newTodo)
 
   todoSubmitFormElem.reset()
