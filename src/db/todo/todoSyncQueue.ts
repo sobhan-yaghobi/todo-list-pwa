@@ -1,6 +1,7 @@
 import { openDB } from "idb"
 import { TodosSyncQueue } from "../../types/todo"
-const todosSyncQueueStoreName = "TodosSyncQueue"
+
+const todosSyncQueueStoreName = "todosSyncQueue"
 
 export const initTodosSyncQueue = async () => {
   return await openDB("todosSyncQueueDB", 1, {

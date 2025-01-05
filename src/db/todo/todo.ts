@@ -1,5 +1,6 @@
 import { openDB } from "idb"
 import { Todo } from "../../types/todo"
+
 const todosStoreName = "todos"
 
 export const initTodosDB = async () => {
@@ -11,6 +12,7 @@ export const initTodosDB = async () => {
     },
   })
 }
+
 export const saveTodosToDB = async (todos: Todo[]) => {
   const db = await initTodosDB()
   const tx = db.transaction(todosStoreName, "readwrite")
@@ -18,6 +20,7 @@ export const saveTodosToDB = async (todos: Todo[]) => {
   todos.forEach((todo) => store.put(todo))
   await tx.done
 }
+
 export const getTodosFromDB = async () => {
   const db = await initTodosDB()
   return await db.getAll(todosStoreName)
