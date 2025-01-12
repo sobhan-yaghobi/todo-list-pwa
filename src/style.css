@@ -141,6 +141,13 @@ li {
       right: 1rem;
     }
   }
+
+  & .todo-list-item-skeleton {
+    height: 130px;
+    padding: 1rem;
+    border-radius: 1rem;
+    animation: pulse 3s linear infinite reverse;
+  }
 }
 
 .button-success {
@@ -159,4 +166,18 @@ li {
   background-color: #1a1a1a;
   color: #535bf2;
   font-size: 3rem;
+}
+
+@keyframes pulse {
+  0% {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  50% {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  100% {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }

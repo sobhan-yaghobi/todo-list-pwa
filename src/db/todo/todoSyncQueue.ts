@@ -1,6 +1,7 @@
 import { openDB } from "idb"
 import { TodosSyncQueue } from "../../types/todo"
-const todosSyncQueueStoreName = "TodosSyncQueue"
+
+const todosSyncQueueStoreName = "todosSyncQueue"
 
 export const initTodosSyncQueue = async () => {
   return await openDB("todosSyncQueueDB", 1, {
@@ -12,11 +13,11 @@ export const initTodosSyncQueue = async () => {
   })
 }
 
-export const saveTodosSyncQueue = async (todosActions: TodosSyncQueue[]) => {
+export const saveTodosSyncQueue = async (TodosSyncQueue: TodosSyncQueue[]) => {
   const db = await initTodosSyncQueue()
   const tx = db.transaction(todosSyncQueueStoreName, "readwrite")
   const store = tx.objectStore(todosSyncQueueStoreName)
-  todosActions.forEach((TodosSyncQueue) => store.put(TodosSyncQueue))
+  TodosSyncQueue.forEach((TodoSyncQueue) => store.put(TodoSyncQueue))
   await tx.done
 }
 
