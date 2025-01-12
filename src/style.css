@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -23,8 +29,7 @@ a {
   }
 }
 
-body {
-  margin: 0;
+.todo-wrapper {
   padding: 1rem;
   display: flex;
   flex-flow: column;
@@ -143,4 +148,15 @@ li {
 
 .button-danger {
   background-color: #db0202d0;
+}
+
+.offline-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  color: #535bf2;
+  font-size: 3rem;
 }
