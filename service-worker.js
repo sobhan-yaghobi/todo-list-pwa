@@ -1,8 +1,9 @@
-const VERSION = "1"
+const VERSION = "3"
 const STATIC_CACHE_NAME = `static-cache-${VERSION}`
 const DYNAMIC_CACHE_NAME = `dynamic-cache-${VERSION}`
+const RESOURCE_NOT_CACHED = ["/node_modules"]
 
-const APP_STATIC_RESOURCE = ["/", "/offline.html", "/src/style.css", "/src/*"]
+const APP_STATIC_RESOURCE = ["/", "/offline.html", "/src/style.css"]
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -35,10 +36,12 @@ self.addEventListener("fetch", (event) => {
         (cacheRes) =>
           cacheRes ||
           fetch(event.request).then(async (fetchRes) => {
-            return caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
-              cache.put(event.request.url, fetchRes.clone())
-              return fetchRes
-            })
+            console.log("event.requestrequestrequest", event.request)
+            return fetchRes
+            // return caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
+            //   cache.put(event.request.url, fetchRes.clone())
+            //   return fetchRes
+            // })
           })
       )
       .catch(() => {
