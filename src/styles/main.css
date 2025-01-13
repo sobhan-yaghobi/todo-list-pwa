@@ -1,3 +1,6 @@
+@import url("./modal.css");
+@import url("./todo.css");
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -13,10 +16,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+body {
+  position: relative;
+}
+
+*:not(dialog) {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border: none;
 }
 
 a {
@@ -29,32 +37,16 @@ a {
   }
 }
 
-.todo-wrapper {
-  padding: 1rem;
-  display: flex;
-  flex-flow: column;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
@@ -76,6 +68,7 @@ input {
   font-size: 14px;
   border-radius: 8px;
   outline: none;
+  border-color: #646cff3a;
 
   &:hover,
   &:focus {
@@ -100,54 +93,11 @@ li {
   list-style-type: none;
 }
 
-#todo-submit-form {
-  margin-inline: auto;
-  width: 30rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-
-  & input {
-    grid-column: span 1 / span 1;
-  }
-
-  & button {
-    grid-column: span 2 / span 2;
-  }
-}
-
-#todo-list {
-  display: grid;
-  padding: 0;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
-
-  & .todo-item {
-    position: relative;
-    width: auto;
-    background-color: #343434;
-    padding: 1rem;
-    border-radius: 1rem;
-
-    & .todo-item__description {
-    }
-
-    & .todo-item__button {
-    }
-
-    & .todo-item__button-delete {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
-  }
-
-  & .todo-list-item-skeleton {
-    height: 130px;
-    padding: 1rem;
-    border-radius: 1rem;
-    animation: pulse 3s linear infinite reverse;
-  }
+.header {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .button-success {

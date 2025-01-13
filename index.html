@@ -6,26 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List PWA</title>
   </head>
-  <body class="todo-wrapper">
-    <h1>Todo List</h1>
-    <form id="todo-submit-form">
-      <input type="text" required name="title" placeholder="title" />
-      <input
-        type="text"
-        required
-        name="description"
-        placeholder="description"
-      />
-      <button type="submit">save todo</button>
-    </form>
-    <hr style="width: 100%" />
-    <ul id="todo-list">
-      <li class="todo-list-item-skeleton"></li>
-      <li class="todo-list-item-skeleton"></li>
-      <li class="todo-list-item-skeleton"></li>
-      <li class="todo-list-item-skeleton"></li>
-    </ul>
+  <body>
+    <header class="header">
+      <h1>Todo List</h1>
+      <button data-open-modal>New Todo</button>
+    </header>
+
+    <div class="todo-wrapper">
+      <ul id="todo-list">
+        <li class="todo-list-item-skeleton"></li>
+        <li class="todo-list-item-skeleton"></li>
+        <li class="todo-list-item-skeleton"></li>
+        <li class="todo-list-item-skeleton"></li>
+      </ul>
+    </div>
+
+    <dialog data-modal>
+      <div class="modal-wrapper">
+        <div class="modal-wrapper-content">
+          <button class="modal-close-button button-danger" data-close-modal>X</button>
+          <form id="todo-submit-form">
+            <input type="text" required name="title" placeholder="title" />
+            <input
+              type="text"
+              required
+              name="description"
+              placeholder="description"
+            />
+            <button type="submit">save todo</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/dom/todo/eventHandler.ts"></script>
+    <script type="module" src="/src/dom/modal/eventHandler.ts"></script>
   </body>
 </html>

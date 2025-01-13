@@ -1,5 +1,6 @@
 import { createTodo, syncTodosToBackend } from "../../api/todo"
 import { Todo } from "../../utils/todo"
+import { closeModal } from "../modal/eventHandler"
 import { renderTodoItems } from "./render"
 
 // Elements Todos Events
@@ -40,6 +41,7 @@ todoSubmitFormElem.addEventListener("submit", async (e) => {
   await createTodo(newTodo)
 
   todoSubmitFormElem.reset()
+  closeModal()
 })
 
 // When Connection Back to Online
