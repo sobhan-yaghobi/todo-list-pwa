@@ -4,7 +4,6 @@
   gap: 1rem;
   flex-flow: column;
   min-width: 320px;
-  min-height: 100vh;
 }
 
 #todo-submit-form {

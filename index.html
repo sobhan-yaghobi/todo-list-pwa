@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/styles/todo.css" />
     <title>Todo List PWA</title>
   </head>
   <body>
@@ -24,7 +25,9 @@
     <dialog data-modal>
       <div class="modal-wrapper">
         <div class="modal-wrapper-content">
-          <button class="modal-close-button button-danger" data-close-modal>X</button>
+          <button class="modal-close-button button-danger" data-close-modal>
+            X
+          </button>
           <form id="todo-submit-form">
             <input type="text" required name="title" placeholder="title" />
             <input
